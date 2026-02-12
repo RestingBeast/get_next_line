@@ -1,1 +1,9 @@
+*This project has been created as part of the 42 curriculum by kkhant-z.*
+
 # Description
+
+# Instructions
+
+# Resources
+
+# Algorithm
