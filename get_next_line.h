@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
@@ -24,8 +25,10 @@
 char	*get_next_line(int fd);
 
 // utils
-void	*expand_mem(void *ptr, size_t original_size, size_t size);
-int		append_until_delimiter(char *dest, char *src, char delimiter);
-size_t	ft_strlen(char *str);
+char	*combine_data(char *leftover, char *buf);
+char	*extract_line(char *buf, char delimiter);
+int		ft_strchr(char *str, int c);
+int		ft_strlen(char *str);
+void	ft_strcat_char(char *dest, char *src, char c);
 
 #endif

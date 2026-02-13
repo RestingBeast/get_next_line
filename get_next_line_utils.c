@@ -6,85 +6,88 @@
 /*   By: kkhant-z <kkhant-z@student.42singapore.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:35:53 by kkhant-z          #+#    #+#             */
-/*   Updated: 2026/02/13 03:47:37 by kkhant-z         ###   ########.fr       */
+/*   Updated: 2026/02/13 08:29:55 by kkhant-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*expand_mem(void *ptr, size_t o_size, size_t size)
+int	ft_strchr(char *str, int c)
 {
-	void	*res;
+	int	i;
 
-	if (size < o_size)
-		return (ptr);
-	res = malloc(size + 1);
-	if (!res)
-		return (NULL);
-	if (ptr)
+	if (!str)
+		return (0);
+	if (c == '\0')
+		return (ft_strlen(str));
+	i = 0;
+	while (str[i] != '\0')
 	{
-		while (o_size-- > 0)
-			((unsigned char *)res)[o_size]
-				= ((unsigned char *)ptr)[o_size];
-		free(ptr);
+		if (str[i] == c)
+			return (i + 1);
+		i++;
 	}
-	return (res);
+	return (0);
 }
 
-size_t	ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	count;
 
+	if (!str)
+		return (0);
 	count = 0;
-	while (str[count] != '\0')
+	while (str[count])
 		count++;
 	return (count);
 }
 
-void	clear_buffer(char *buf)
-{
-	int	i;
-
-	i = 0;
-	while (buf[i] != '\0')
-	{
-		buf[i] = '\0';
-		i++;
-	}
-}
-
-void	trim_buffer(char *buf, int index)
-{
-	int	i;
-
-	i = 0;
-	while (buf[index + i] != '\0')
-	{
-		buf[i] = buf[index + i];
-		i++;
-	}
-	buf[i] = '\0';
-}
-
-int	append_until_delimiter(char *dest, char *buf, char delimiter)
+void	ft_strcat_char(char *dest, char *src, char c)
 {
 	int	i;
 	int	dest_len;
 
-	dest_len = ft_strlen(dest);
 	i = 0;
-	while (buf[i] != '\0')
+	dest_len = ft_strlen(dest);
+	while (src[i] != c)
 	{
-		dest[dest_len + i] = buf[i];
-		if (dest[dest_len + i] == delimiter)
-		{
-			trim_buffer(buf, i + 1);
-			dest[dest_len + i + 1] = '\0';
-			return (1);
-		}
+		dest[dest_len + i] = src[i];
 		i++;
 	}
+	if (c != '\0')
+		dest[dest_len + (i++)] = c;
 	dest[dest_len + i] = '\0';
-	clear_buffer(buf);
-	return (0);
+}
+
+char	*combine_data(char *leftover, char *buf)
+{
+	int		len;
+	char	*res;
+
+	len = ft_strlen(leftover);
+	res = malloc(len + BUFFER_SIZE + 1);
+	if (!res)
+		return (NULL);
+	res[0] = '\0';
+	if (leftover)
+		ft_strcat_char(res, leftover, '\0');
+	ft_strcat_char(res, buf, '\0');
+	free(leftover);
+	return (res);
+}
+
+char	*extract_line(char *str, char delimiter)
+{
+	int		len;
+	char	*res;
+
+	if (!str)
+		return (NULL);
+	len = ft_strchr(str, delimiter);
+	res = malloc(len + 1);
+	if (!res)
+		return (NULL);
+	res[0] = '\0';
+	ft_strcat_char(res, str, delimiter);
+	return (res);
 }
