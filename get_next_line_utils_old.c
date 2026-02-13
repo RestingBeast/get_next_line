@@ -16,11 +16,15 @@ int	ft_strchr(char *str, int c)
 {
 	int	i;
 
+	if (!str)
+		return (0);
+	if (c == '\0')
+		return (ft_strlen(str));
 	i = 0;
 	while (str[i] != '\0')
 	{
 		if (str[i] == c)
-			return (i);
+			return (i + 1);
 		i++;
 	}
 	return (0);
@@ -33,62 +37,57 @@ int	ft_strlen(char *str)
 	if (!str)
 		return (0);
 	count = 0;
-	while (str[count] != '\0')
+	while (str[count])
 		count++;
 	return (count);
 }
 
-void	ft_strcat(char *dest, char *src)
+void	ft_strcat_char(char *dest, char *src, char c)
 {
 	int	i;
-	int	len;
+	int	dest_len;
 
-	len = ft_strlen(dest);
 	i = 0;
-	while (src[i] != '\0')
+	dest_len = ft_strlen(dest);
+	while (src[i] != c)
 	{
-		dest[len + i] = src[i];
+		dest[dest_len + i] = src[i];
 		i++;
 	}
-	dest[len + i] = '\0';
+	if (c != '\0')
+		dest[dest_len + (i++)] = c;
+	dest[dest_len + i] = '\0';
 }
 
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*res;
-
-	res = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!res)
-		return (NULL);
-	res[0] = '\0';
-	if (s1)
-		ft_strcat(res, s1);
-	ft_strcat(res, s2);
-	free(s1);
-	return (res);
-}
-
-char	*ft_extract(char *str, char delimiter)
+char	*combine_data(char *leftover, char *buf)
 {
 	int		len;
 	char	*res;
-	int		i;
 
-	if (ft_strchr(str, delimiter))
-		len = ft_strchr(str, delimiter) + 1;
-	else
-		len = ft_strlen(str);
+	len = ft_strlen(leftover);
+	res = malloc(len + BUFFER_SIZE + 1);
+	if (!res)
+		return (NULL);
+	res[0] = '\0';
+	if (leftover)
+		ft_strcat_char(res, leftover, '\0');
+	ft_strcat_char(res, buf, '\0');
+	free(leftover);
+	return (res);
+}
+
+char	*extract_line(char *str, char delimiter)
+{
+	int		len;
+	char	*res;
+
+	if (!str)
+		return (NULL);
+	len = ft_strchr(str, delimiter);
 	res = malloc(len + 1);
 	if (!res)
 		return (NULL);
-	i = 0;
-	while (str[i] != delimiter && str[i] != '\0')
-	{
-		res[i] = str[i];
-		i++;
-	}
-	if (str[i] == delimiter)
-		res[i++] = delimiter;
-	res[i] = '\0';
+	res[0] = '\0';
+	ft_strcat_char(res, str, delimiter);
 	return (res);
 }

@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# include <stdio.h>
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
@@ -23,10 +25,10 @@
 char	*get_next_line(int fd);
 
 // utils
-int	    ft_strchr(char *str, int c);
-int	    ft_strlen(char *str);
-void	ft_strcat(char *dest, char *src);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_extract(char *str, char delimiter);
+char	*combine_data(char *leftover, char *buf);
+char	*extract_line(char *buf, char delimiter);
+int		ft_strchr(char *str, int c);
+int		ft_strlen(char *str);
+void	ft_strcat_char(char *dest, char *src, char c);
 
 #endif

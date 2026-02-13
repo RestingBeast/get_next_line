@@ -14,55 +14,63 @@
 
 static char	*trim_delimiter(char *str, char delimiter)
 {
-	int		pos;
+	int		len;
+	int		d_index;
 	int		i;
 	char	*res;
 
-	pos = ft_strchr(str, delimiter);
-	if (pos == 0)
-		return (free(str), NULL);
-	res = malloc(ft_strlen(str) - pos);
+	if (!str)
+		return (NULL);
+	d_index = ft_strchr(str, delimiter);
+	len = ft_strlen(str) - d_index;
+	res = malloc(len + 1);
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (str[++pos] != '\0')
+	while (str[d_index] != '\0')
 	{
-		res[i] = str[pos];
+		res[i] = str[d_index++];
 		i++;
 	}
 	res[i] = '\0';
-	return (free(str), res);
+	free(str);
+	return (res);
+}
+
+static char	*handle_zero_bytes_read(char **str, char delimiter)
+{
+	char	*res;
+
+	if (ft_strchr(*str, delimiter))
+		return (extract_line(*str, delimiter));
+	else if (ft_strlen(*str) > 0)
+	{
+		res = extract_line(*str, '\0');
+		free(*str);
+		*str = NULL;
+		return (res);
+	}
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*leftover = NULL;
 	const char	delimiter = '\n';
-	char		*buf;
-	char		*res;
+	char		buf[BUFFER_SIZE + 1];
 	int			bytes_read;
 
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
+	leftover = trim_delimiter(leftover, delimiter);
 	bytes_read = read(fd, buf, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
 		buf[bytes_read] = '\0';
-		leftover = ft_strjoin(leftover, buf);
+		leftover = combine_data(leftover, buf);
 		if (ft_strchr(leftover, delimiter))
-		{
-			res = ft_extract(leftover, delimiter);
-			leftover = trim_delimiter(leftover, delimiter);
-			return (free(buf), res);
-		}
+			return (extract_line(leftover, delimiter));
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 	}
-	if (bytes_read == 0 && leftover != NULL)
-	{
-		res = ft_extract(leftover, delimiter);
-		leftover = trim_delimiter(leftover, delimiter);
-		return (free(buf), res);
-	}
-	return (free(buf), NULL);
+	if (bytes_read == 0)
+		return (handle_zero_bytes_read(&leftover, delimiter));
+	return (NULL);
 }
