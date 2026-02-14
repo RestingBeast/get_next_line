@@ -20,7 +20,7 @@ int	ft_strchr(char *str, int c)
 	while (str[i] != '\0')
 	{
 		if (str[i] == c)
-			return (i);
+			return (i + 1);
 		i++;
 	}
 	return (0);
@@ -75,7 +75,7 @@ char	*ft_extract(char *str, char delimiter)
 	int		i;
 
 	if (ft_strchr(str, delimiter))
-		len = ft_strchr(str, delimiter) + 1;
+		len = ft_strchr(str, delimiter);
 	else
 		len = ft_strlen(str);
 	res = malloc(len + 1);

@@ -6,7 +6,7 @@
 /*   By: kkhant-z <kkhant-z@student.42singapore.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:31:24 by kkhant-z          #+#    #+#             */
-/*   Updated: 2026/02/14 16:57:21 by kkhant-z         ###   ########.fr       */
+/*   Updated: 2026/02/14 20:17:48 by kkhant-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
+
+typedef struct s_leftover
+{
+	char	*data;
+	size_t	capacity;
+}	t_leftover;
 
 char	*get_next_line(int fd);
 

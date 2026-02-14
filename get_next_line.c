@@ -6,7 +6,7 @@
 /*   By: kkhant-z <kkhant-z@student.42singapore.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:35:41 by kkhant-z          #+#    #+#             */
-/*   Updated: 2026/02/14 16:58:56 by kkhant-z         ###   ########.fr       */
+/*   Updated: 2026/02/14 20:20:30 by kkhant-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,23 @@ static char	*trim_delimiter(char *str, char delimiter)
 {
 	int		pos;
 	int		i;
+	int		len;
 	char	*res;
 
 	pos = ft_strchr(str, delimiter);
 	if (pos == 0)
 		return (free(str), NULL);
-	res = malloc(ft_strlen(str) - pos);
+	len = ft_strlen(str) - pos;
+	if (len == 0)
+		return (free(str), NULL);
+	res = malloc(len + 1);
 	if (!res)
-		return (NULL);
+		return (free(str), NULL);
 	i = 0;
-	while (str[++pos] != '\0')
+	while (str[pos] != '\0')
 	{
 		res[i] = str[pos];
+		pos++;
 		i++;
 	}
 	res[i] = '\0';
