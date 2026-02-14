@@ -6,7 +6,7 @@
 /*   By: kkhant-z <kkhant-z@student.42singapore.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:35:41 by kkhant-z          #+#    #+#             */
-/*   Updated: 2026/02/13 08:31:22 by kkhant-z         ###   ########.fr       */
+/*   Updated: 2026/02/14 16:58:56 by kkhant-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,20 @@ static char	*trim_delimiter(char *str, char delimiter)
 	return (free(str), res);
 }
 
+static char	*extract_and_trim(char **leftover, char delimiter)
+{
+	char	*res;
+
+	res = ft_extract(*leftover, delimiter);
+	*leftover = trim_delimiter(*leftover, delimiter);
+	return (res);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*leftover = NULL;
 	const char	delimiter = '\n';
 	char		*buf;
-	char		*res;
 	int			bytes_read;
 
 	buf = malloc(BUFFER_SIZE + 1);
@@ -51,18 +59,10 @@ char	*get_next_line(int fd)
 		buf[bytes_read] = '\0';
 		leftover = ft_strjoin(leftover, buf);
 		if (ft_strchr(leftover, delimiter))
-		{
-			res = ft_extract(leftover, delimiter);
-			leftover = trim_delimiter(leftover, delimiter);
-			return (free(buf), res);
-		}
+			return (free(buf), extract_and_trim(&leftover, delimiter));
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 	}
 	if (bytes_read == 0 && leftover != NULL)
-	{
-		res = ft_extract(leftover, delimiter);
-		leftover = trim_delimiter(leftover, delimiter);
-		return (free(buf), res);
-	}
+		return (free(buf), extract_and_trim(&leftover, delimiter));
 	return (free(buf), NULL);
 }
