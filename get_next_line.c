@@ -58,6 +58,8 @@ char	*get_next_line(int fd)
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
+	if (leftover != NULL && ft_strchr(leftover, delimiter))
+		return (free(buf), extract_and_trim(&leftover, delimiter));
 	bytes_read = read(fd, buf, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
