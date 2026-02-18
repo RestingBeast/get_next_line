@@ -20,7 +20,9 @@ cc -D BUFFER_SIZE=10 main.c get_next_line.c get_next_line_utils.c
 # Algorithm
 
 - Buffer is allocated based on `BUFFER_SIZE`
+- Check if static variable `leftover` has a delimiter in it and returns the string before delimiter (inclusive) if it does
 - Read from the `fd` and fill the buffer
-- Combine the buffer with static variable `leftover` which is null in first read
+- Combine the buffer with static variable `leftover`
 - If delimiter is in the combined buffer, the string before delimiter (inclusive) is returned and the remaining string is stored in a static variable `leftover`
-- If there is nothing left to read, the lines are extracted until nothing is left in the static variable `leftover`
+- If there is nothing left to read, the remaining string in static variable `leftover` is returned and `leftover` is set to `NULL`
+
