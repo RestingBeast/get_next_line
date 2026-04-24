@@ -16,8 +16,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# ifndef GNL_SIZE
-#  define GNL_SIZE 1024
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
 # endif
 
 typedef struct s_leftover

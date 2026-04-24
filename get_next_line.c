@@ -55,19 +55,19 @@ char	*get_next_line(int fd)
 	char		*buf;
 	int			bytes_read;
 
-	buf = malloc(GNL_SIZE + 1);
+	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
 	if (leftover != NULL && gnl_strchr(leftover, delimiter))
 		return (free(buf), extract_and_trim(&leftover, delimiter));
-	bytes_read = read(fd, buf, GNL_SIZE);
+	bytes_read = read(fd, buf, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
 		buf[bytes_read] = '\0';
 		leftover = gnl_strjoin(leftover, buf);
 		if (gnl_strchr(leftover, delimiter))
 			return (free(buf), extract_and_trim(&leftover, delimiter));
-		bytes_read = read(fd, buf, GNL_SIZE);
+		bytes_read = read(fd, buf, BUFFER_SIZE);
 	}
 	if (bytes_read == 0 && leftover != NULL)
 		return (free(buf), extract_and_trim(&leftover, delimiter));
