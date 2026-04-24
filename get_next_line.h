@@ -29,10 +29,10 @@ typedef struct s_leftover
 char	*get_next_line(int fd);
 
 // utils
-int		ft_strchr(char *str, int c);
-int		ft_strlen(char *str);
-void	ft_strcat(char *dest, char *src);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_extract(char *str, char delimiter);
+int		gnl_strchr(char *str, int c);
+int		gnl_strlen(char *str);
+void	gnl_strcat(char *dest, char *src);
+char	*gnl_strjoin(char *s1, char *s2);
+char	*gnl_extract(char *str, char delimiter);
 
 #endif

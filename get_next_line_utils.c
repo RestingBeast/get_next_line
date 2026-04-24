@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int	ft_strchr(char *str, int c)
+int	gnl_strchr(char *str, int c)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	ft_strchr(char *str, int c)
 	return (0);
 }
 
-int	ft_strlen(char *str)
+int	gnl_strlen(char *str)
 {
 	int	count;
 
@@ -38,7 +38,7 @@ int	ft_strlen(char *str)
 	return (count);
 }
 
-void	ft_strcat(char *dest, char *src)
+void	gnl_strcat(char *dest, char *src)
 {
 	int	i;
 	int	len;
@@ -53,7 +53,7 @@ void	ft_strcat(char *dest, char *src)
 	dest[len + i] = '\0';
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*res;
 
@@ -68,7 +68,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (res);
 }
 
-char	*ft_extract(char *str, char delimiter)
+char	*gnl_extract(char *str, char delimiter)
 {
 	int		len;
 	char	*res;
