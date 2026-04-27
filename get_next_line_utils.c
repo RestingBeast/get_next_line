@@ -6,7 +6,7 @@
 /*   By: kkhant-z <kkhant-z@student.42singapore.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:35:53 by kkhant-z          #+#    #+#             */
-/*   Updated: 2026/02/14 16:58:24 by kkhant-z         ###   ########.fr       */
+/*   Updated: 2026/04/27 15:42:44 by kkhant-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	gnl_strcat(char *dest, char *src)
 	int	i;
 	int	len;
 
-	len = ft_strlen(dest);
+	len = gnl_strlen(dest);
 	i = 0;
 	while (src[i] != '\0')
 	{
@@ -57,13 +57,13 @@ char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*res;
 
-	res = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	res = malloc(gnl_strlen(s1) + gnl_strlen(s2) + 1);
 	if (!res)
 		return (NULL);
 	res[0] = '\0';
 	if (s1)
-		ft_strcat(res, s1);
-	ft_strcat(res, s2);
+		gnl_strcat(res, s1);
+	gnl_strcat(res, s2);
 	free(s1);
 	return (res);
 }
@@ -74,10 +74,10 @@ char	*gnl_extract(char *str, char delimiter)
 	char	*res;
 	int		i;
 
-	if (ft_strchr(str, delimiter))
-		len = ft_strchr(str, delimiter);
+	if (gnl_strchr(str, delimiter))
+		len = gnl_strchr(str, delimiter);
 	else
-		len = ft_strlen(str);
+		len = gnl_strlen(str);
 	res = malloc(len + 1);
 	if (!res)
 		return (NULL);
